@@ -26497,6 +26497,8 @@ window.Vue = __webpack_require__(16);
 Vue.component('example-component', __webpack_require__(46));
 Vue.component('youtube-dashboard', __webpack_require__(49));
 
+window.eventBus = new Vue({});
+
 var app = new Vue({
   el: '#app'
 });
@@ -48913,38 +48915,67 @@ module.exports = Component.exports
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__VideoGroup_vue__ = __webpack_require__(51);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__VideoGroup_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__VideoGroup_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Search__ = __webpack_require__(70);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Search___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__Search__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Finder_vue__ = __webpack_require__(76);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Finder_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__Finder_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__Search__ = __webpack_require__(70);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__Search___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__Search__);
 //
 //
 //
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+
 
 
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
-    VideoGroup: __WEBPACK_IMPORTED_MODULE_0__VideoGroup_vue___default.a
+    VideoGroup: __WEBPACK_IMPORTED_MODULE_0__VideoGroup_vue___default.a, Finder: __WEBPACK_IMPORTED_MODULE_1__Finder_vue___default.a
   },
 
   created: function created() {
     var _this = this;
 
-    __WEBPACK_IMPORTED_MODULE_1__Search___default()({
+    __WEBPACK_IMPORTED_MODULE_2__Search___default()({
       apiKey: 'AIzaSyBYihdwrKA2wwLzOdhR6madQt1vFeToP7k',
       term: 'x men',
       items: 10
     }, function (response) {
-      return _this.videos = response;
+      return _this.handleSearchResults(response);
+    });
+
+    window.eventBus.$on('searchForYoutubeStarted', function () {
+      _this.loading = true;
+    });
+
+    window.eventBus.$on('searchResultFromYoutube', function (videos) {
+      console.log('search result', videos);
+      _this.loading = false;
+      _this.videos = videos;
     });
   },
   data: function data() {
     return {
-      videos: null
+      videos: null,
+      loading: true
     };
+  },
+
+
+  methods: {
+    handleSearchResults: function handleSearchResults(result) {
+      this.loading = false;
+      this.videos = result;
+    }
   }
 });
 
@@ -51407,7 +51438,15 @@ var render = function() {
   return _c(
     "div",
     { staticClass: "YoutubeDash__wrapper" },
-    [_c("video-group", { attrs: { videos: _vm.videos } })],
+    [
+      _c("finder"),
+      _vm._v(" "),
+      !_vm.loading
+        ? _c("div", [_c("video-group", { attrs: { videos: _vm.videos } })], 1)
+        : _vm._e(),
+      _vm._v(" "),
+      _vm.loading ? _c("div", [_vm._v("Loading...")]) : _vm._e()
+    ],
     1
   )
 }
@@ -51426,6 +51465,194 @@ if (false) {
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
+
+/***/ }),
+/* 73 */,
+/* 74 */,
+/* 75 */,
+/* 76 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+function injectStyle (ssrContext) {
+  if (disposed) return
+  __webpack_require__(79)
+}
+var normalizeComponent = __webpack_require__(3)
+/* script */
+var __vue_script__ = __webpack_require__(77)
+/* template */
+var __vue_template__ = __webpack_require__(78)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = injectStyle
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/assets/js/Youtube/Finder.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-07cb1284", Component.options)
+  } else {
+    hotAPI.reload("data-v-07cb1284", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 77 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Search__ = __webpack_require__(70);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Search___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__Search__);
+
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  data: function data() {
+    return {
+      searchString: ''
+    };
+  },
+
+
+  methods: {
+    handleFormSubmit: function handleFormSubmit() {
+      var _this = this;
+
+      window.eventBus.$emit('searchForYoutubeStarted');
+
+      __WEBPACK_IMPORTED_MODULE_0__Search___default()({
+        apiKey: 'AIzaSyBYihdwrKA2wwLzOdhR6madQt1vFeToP7k',
+        term: this.searchString,
+        items: 10
+      }, function (data) {
+        window.eventBus.$emit('searchResultFromYoutube', data);
+        _this.searchString = '';
+      });
+    }
+  }
+});
+
+/***/ }),
+/* 78 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { staticClass: "Search__wrapper" }, [
+    _c("div", { staticClass: "container" }, [
+      _c(
+        "form",
+        {
+          on: {
+            submit: function($event) {
+              $event.preventDefault()
+              _vm.handleFormSubmit($event)
+            }
+          }
+        },
+        [
+          _c("input", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.searchString,
+                expression: "searchString"
+              }
+            ],
+            staticClass: "form-control",
+            attrs: { type: "text" },
+            domProps: { value: _vm.searchString },
+            on: {
+              input: function($event) {
+                if ($event.target.composing) {
+                  return
+                }
+                _vm.searchString = $event.target.value
+              }
+            }
+          })
+        ]
+      )
+    ])
+  ])
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-07cb1284", module.exports)
+  }
+}
+
+/***/ }),
+/* 79 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(80);
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var update = __webpack_require__(65)("563ce0f8", content, false, {});
+// Hot Module Replacement
+if(false) {
+ // When the styles change, update the <style> tags
+ if(!content.locals) {
+   module.hot.accept("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-07cb1284\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../node_modules/sass-loader/lib/loader.js!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Finder.vue", function() {
+     var newContent = require("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-07cb1284\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../node_modules/sass-loader/lib/loader.js!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Finder.vue");
+     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+     update(newContent);
+   });
+ }
+ // When the module is disposed, remove the <style> tags
+ module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+/* 80 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(64)(false);
+// imports
+
+
+// module
+exports.push([module.i, "\n.Search__wrapper {\n  margin-bottom: 10px;\n}\n", ""]);
+
+// exports
+
 
 /***/ })
 /******/ ]);

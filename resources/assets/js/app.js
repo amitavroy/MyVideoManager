@@ -18,6 +18,8 @@ window.Vue = require('vue');
 Vue.component('example-component', require('./components/ExampleComponent.vue'));
 Vue.component('youtube-dashboard', require('./Youtube/YoutubeDash.vue'));
 
+window.eventBus = new Vue({});
+
 const app = new Vue({
     el: '#app'
 });
