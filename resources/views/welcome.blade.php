@@ -13,7 +13,8 @@
         <div class="container-fluid" id="app">
             <div class="row">
                 <div class="col-md">
-                    <youtube-dashboard></youtube-dashboard>
+                    <!-- <youtube-dashboard></youtube-dashboard> -->
+                    <router-view></router-view>
                 </div>
             </div>
         </div>

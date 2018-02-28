@@ -21,6 +21,7 @@
     },
     "dependencies": {
         "isotope-layout": "^3.0.5",
-        "vue-images-loaded": "^1.1.2"
+        "vue-images-loaded": "^1.1.2",
+        "vue-router": "^3.0.1"
     }
 }

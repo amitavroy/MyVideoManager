@@ -5,7 +5,9 @@
       <div class="card-body">
         <h5 class="card-title">{{videoTitle}}</h5>
         <p class="card-text">{{videoDescription}}</p>
-        <a href="#" class="btn btn-primary">Go somewhere</a>
+        <router-link :to="{name: 'youtube-video', params: {id: video.id.videoId, video: video} }" class="btn btn-primary">
+          Show video
+        </router-link>
       </div>
     </div>
   </div>
