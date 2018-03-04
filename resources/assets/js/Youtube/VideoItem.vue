@@ -1,5 +1,5 @@
 <template>
-  <div class="VideoItem__wrapper">
+  <div class="VideoItem__wrapper clearfix">
     <div class="card" style="width: 15rem;">
       <router-link :to="{name: 'youtube-video', params: {id: video.id.videoId, video: video} }">
         <img class="card-img-top" v-bind:src="videoImage" v-bind:alt="videoTitle">
@@ -64,7 +64,7 @@ export default {
       border-bottom: 2px solid #212529;
     }
   }
-  margin: 0px 5px 5px 0px;
+  margin: 0px 10px 10px 0px;
   .card-img-top {
     max-height: 210px;
   }

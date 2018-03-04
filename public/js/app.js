@@ -53793,7 +53793,7 @@ exports = module.exports = __webpack_require__(20)(false);
 
 
 // module
-exports.push([module.i, "\n.card {\n  margin: 0px 5px 5px 0px;\n}\n.card .card-title a {\n    color: #212529;\n}\n.card .card-title a:hover {\n      text-decoration: none;\n      border-bottom: 2px solid #212529;\n}\n.card .card-img-top {\n    max-height: 210px;\n}\n", ""]);
+exports.push([module.i, "\n.card {\n  margin: 0px 10px 10px 0px;\n}\n.card .card-title a {\n    color: #212529;\n}\n.card .card-title a:hover {\n      text-decoration: none;\n      border-bottom: 2px solid #212529;\n}\n.card .card-img-top {\n    max-height: 210px;\n}\n", ""]);
 
 // exports
 
@@ -53901,7 +53901,7 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "VideoItem__wrapper" }, [
+  return _c("div", { staticClass: "VideoItem__wrapper clearfix" }, [
     _c(
       "div",
       { staticClass: "card", staticStyle: { width: "15rem" } },
