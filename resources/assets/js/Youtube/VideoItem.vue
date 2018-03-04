@@ -64,7 +64,7 @@ export default {
       border-bottom: 2px solid #212529;
     }
   }
-  margin: 0px 10px 10px 0px;
+  margin: 0px 5px 5px 0px;
   .card-img-top {
     max-height: 210px;
   }

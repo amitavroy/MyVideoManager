@@ -2,8 +2,8 @@
 
 @section('content')
 <div class="container">
-    <div class="row py-5">
-        <div class="col-md-11 mx-auto">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
             <router-view></router-view>
         </div>
     </div>
