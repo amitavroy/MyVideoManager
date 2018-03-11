@@ -43,7 +43,7 @@ class LoginController extends Controller
         return [
             'email' => $request->{$this->username()},
             'password' => $request->password,
-            'is_active' => 1,
+            'active' => 1,
         ];
     }
 }
