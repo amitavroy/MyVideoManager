@@ -40,7 +40,6 @@
       relayoutTheGrid() {
         setTimeout(() => {
           var elem = document.querySelector('.grid');
-          console.log(elem);
           this.isotope = new Isotope( elem, {
             itemSelector: '.card',
             layoutMode: 'masonry'
