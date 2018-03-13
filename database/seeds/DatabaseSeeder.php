@@ -14,11 +14,29 @@ class DatabaseSeeder extends Seeder
     {
         // $this->call(UsersTableSeeder::class);
         
-        factory(User::class)->create([
-            'name' => 'Amitav Roy',
+        $user = factory(User::class)->create([
+            'name' => 'Amitav Office',
             'email' => 'amitav.roy@focalworks.in',
             'password' => bcrypt('password'),
             'active' => 1,
+        ]);
+
+        $this->createComments($user->id, 10);
+
+        $user = factory(User::class)->create([
+            'name' => 'Amitav Personal',
+            'email' => 'amitavroy@gmail.com',
+            'password' => bcrypt('password'),
+            'active' => 1,
+        ]);
+
+        $this->createComments($user->id, 4);
+    }
+
+    private function createComments($userId, $count)
+    {
+        factory(\App\Comment::class, $count)->create([
+            'user_id' => $userId
         ]);
     }
 }
