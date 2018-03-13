@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\User;
 use Illuminate\Http\Request;
 use App\Comment;
 use Illuminate\Support\Facades\Auth;
@@ -34,6 +35,8 @@ class CommentController extends Controller
             'is_published' => 1,
             'video_id' => $data['videoId']
         ]);
+
+        $comment = Comment::find($comment->id);
 
         return response($comment, 201);
     }

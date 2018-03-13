@@ -1,9 +1,9 @@
 <template>
   <div class="card pb-1">
     <div class="card-body">
-      {{comment.body}}
+      <small class="text-muted">{{comment.user.name}} {{comment.created_at}}</small>
       <br>
-      <small class="text-muted">{{comment.created_at}}</small>
+      {{comment.body}}
     </div>
   </div>
 </template>

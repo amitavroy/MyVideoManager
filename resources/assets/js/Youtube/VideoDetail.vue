@@ -37,7 +37,7 @@
 
     created() {
       if (this.$route.params.video === undefined) {
-//            this.$router.push({name: 'youtube-dash'});
+        this.$router.push({name: 'youtube-dash'});
       }
 
       this.videoId = this.$route.params.id;
