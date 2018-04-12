@@ -20,6 +20,10 @@
     created() {
       window.eventBus.$on('commentAddedEvent', comment => this.handleNewCommentAdded(comment));
       this.loadComments();
+      window.Echo.channel('comments').listen('.comment.created', event => {
+        console.log('event', event);
+        this.handleNewCommentAdded(event.comment);
+      })
     },
 
     data() {
