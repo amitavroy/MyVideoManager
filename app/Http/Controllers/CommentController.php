@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\Comment\CommentCreated;
 use App\User;
 use Illuminate\Http\Request;
 use App\Comment;
@@ -37,6 +38,8 @@ class CommentController extends Controller
         ]);
 
         $comment = Comment::find($comment->id);
+
+        event(new CommentCreated($comment));
 
         return response($comment, 201);
     }
