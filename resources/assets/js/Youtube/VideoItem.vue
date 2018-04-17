@@ -1,17 +1,17 @@
 <template>
   <div class="VideoItem__wrapper clearfix">
     <div class="card" style="width: 15rem;">
-      <router-link :to="{name: 'youtube-video', params: {id: video.id.videoId, video: video} }">
+      <router-link :to="{name: 'youtube-video', params: {id: video.id.videoId} }">
         <img class="card-img-top" v-bind:src="videoImage" v-bind:alt="videoTitle">
       </router-link>
       <div class="card-body">
         <h5 class="card-title">
-          <router-link :to="{name: 'youtube-video', params: {id: video.id.videoId, video: video} }">
+          <router-link :to="{name: 'youtube-video', params: {id: video.id.videoId} }">
             {{videoTitle}}
           </router-link>
         </h5>
         <p class="card-text">{{videoDescription}}</p>
-        <router-link :to="{name: 'youtube-video', params: {id: video.id.videoId, video: video} }" class="btn btn-primary">
+        <router-link :to="{name: 'youtube-video', params: {id: video.id.videoId} }" class="btn btn-primary">
           Show video
         </router-link>
       </div>

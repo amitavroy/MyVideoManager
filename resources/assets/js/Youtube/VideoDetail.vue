@@ -28,6 +28,7 @@
 </template>
 
 <script>
+  import GetVideo from './GetVideo';
   import CommentWrapper from './Comments/CommentWrapper.vue';
 
   export default {
@@ -36,13 +37,14 @@
     },
 
     created() {
-      if (this.$route.params.video === undefined) {
-        this.$router.push({name: 'youtube-dash'});
-      }
-
       this.videoId = this.$route.params.id;
       this.url = `https://www.youtube.com/embed/${this.videoId}`;
-      this.video = this.$route.params.video;
+      GetVideo({
+        apiKey: 'AIzaSyBYihdwrKA2wwLzOdhR6madQt1vFeToP7k',
+        videoId: this.videoId
+      }, response => {
+        this.video = response[0];
+      })
     },
 
     data() {
