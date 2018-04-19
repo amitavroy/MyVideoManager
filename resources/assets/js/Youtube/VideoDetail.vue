@@ -9,7 +9,9 @@
 
         <p>{{video.snippet.description}}</p>
         <div class="embed-responsive embed-responsive-16by9">
-          <iframe v-bind:src="url" class="embed-responsive-item"></iframe>
+          <!-- <iframe v-bind:src="url" class="embed-responsive-item"></iframe> -->
+          <youtube :video-id="videoId" ref="youtube" @ended="videoEnded"></youtube>
+          <button @click="playVideo">play</button>
         </div>
       </div>
 
@@ -52,6 +54,15 @@
         videoId: null,
         video: null,
         url: null
+      }
+    },
+
+    methods: {
+      playVideo () {
+        this.player.playVideo()
+      },
+      videoEnded () {
+        console.log('logging')
       }
     }
   }

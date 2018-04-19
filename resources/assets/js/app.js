@@ -9,10 +9,13 @@ require('./bootstrap');
 
 window.Vue = require('vue');
 import VueRouter from 'vue-router';
+import VueYoutube from 'vue-youtube';
+
 import YoutubeDash from './Youtube/YoutubeDash.vue';
 import VideoDetail from './Youtube/VideoDetail.vue';
 
 Vue.use(VueRouter);
+Vue.use(VueYoutube);
 
 window.eventBus = new Vue({});
 
