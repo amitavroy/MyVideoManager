@@ -4,14 +4,17 @@
     <div class="row" v-if="video">
       <div class="col-sm-8">
         <h2>{{video.snippet.title}}</h2>
-        <br>
         <small>Channel: {{video.snippet.channelTitle}}</small>
 
-        <p>{{video.snippet.description}}</p>
-        <div class="embed-responsive embed-responsive-16by9">
-          <!-- <iframe v-bind:src="url" class="embed-responsive-item"></iframe> -->
+        <div class="embed-responsive embed-responsive-16by9 mb-3">
           <youtube :video-id="videoId" ref="youtube" @ended="videoEnded"></youtube>
           <button @click="playVideo">play</button>
+        </div>
+
+        <p>{{video.snippet.description}}</p>
+
+        <div class="action-buttons mt-2">
+          <playlist-wrapper></playlist-wrapper>
         </div>
       </div>
 
@@ -32,10 +35,12 @@
 <script>
   import GetVideo from './GetVideo';
   import CommentWrapper from './Comments/CommentWrapper.vue';
+  import PlaylistWrapper from './Playlist/PlaylistWrapper.vue';
 
   export default {
     components: {
-      CommentWrapper
+      CommentWrapper,
+      PlaylistWrapper
     },
 
     created() {
@@ -46,7 +51,7 @@
         videoId: this.videoId
       }, response => {
         this.video = response[0];
-      })
+      });
     },
 
     data() {
