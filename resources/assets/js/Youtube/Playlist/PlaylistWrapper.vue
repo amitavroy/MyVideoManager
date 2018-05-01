@@ -4,27 +4,31 @@
             @click="playlistOpen">+ Add</button>
 
     <div class="list-wrapper" v-if="showPlaylist">
-      <div class="list">
-        <div class="clearfix mb-2">
-          <div class="float-left">My playlists</div>
-          <div class="float-right cursor" @click="playlistOpen">Close</div>
+      <div v-if="!loadingData">
+        <div class="list">
+          <div class="clearfix mb-2">
+            <div class="float-left">My playlists</div>
+            <div class="float-right cursor" @click="playlistOpen">Close</div>
+          </div>
+          <div class="clearfix mb-2">
+            <ul class="list-group">
+              <li class="list-group-item" v-for="item in playlist" v-bind:key="item.id">{{item.name}}</li>
+            </ul>
+          </div>
         </div>
-        <div class="clearfix mb-2">
-          <ul class="list-group">
-            <li class="list-group-item" v-for="item in playlist" v-bind:key="item.id">{{item.name}}</li>
-          </ul>
-        </div>
+        <form v-on:submit.prevent="handleSavePlaylist">
+          <div class="form-group row">
+            <div class="col-sm-8">
+              <input type="text" class="form-control" placeholder="Create new playlist" v-model="playlistName">
+            </div>
+            <div class="col-sm-4">
+              <input type="checkbox" id="private" name="private" v-model="isPrivate"> Private
+            </div>
+          </div>
+        </form>
       </div>
-      <form v-on:submit.prevent="handleSavePlaylist">
-        <div class="form-group row">
-          <div class="col-sm-8">
-            <input type="text" class="form-control" placeholder="Create new playlist" v-model="playlistName">
-          </div>
-          <div class="col-sm-4">
-            <input type="checkbox" id="private" name="private" v-model="isPrivate"> Private
-          </div>
-        </div>
-      </form>
+
+      <div v-if="loadingData"><i class="fas fa-circle-notch fa-spin"></i></div>
     </div>
   </div>
 </template>
@@ -36,6 +40,7 @@
     data () {
       return {
         showPlaylist: false,
+        loadingData: false,
         playlistName: '',
         isPrivate: false,
         playlist: null
@@ -46,18 +51,27 @@
         this.loadUserPlaylist();
       },
       loadUserPlaylist () {
+        this.loadingData = true;
         axios.get('api/user/playlists').then(response => {
+          this.showPlaylist = !this.showPlaylist;
           setTimeout(() => {
-            this.showPlaylist = !this.showPlaylist;
+            this.loadingData = false;
             this.playlist = response.data;
-          }, 300)
+          }, 1000)
         })
       },
       handleSavePlaylist () {
-        axios.post('api/playlist', {name: this.playlistName, isPrivate: this.isPrivate}).then(response => {
-          console.log('response', response);
-          this.playlistName = '';
-        });
+        axios.post('api/playlist', {name: this.playlistName, isPrivate: this.isPrivate})
+          .then(response => {
+            console.log('response', response);
+            this.playlistName = '';
+            this.playlist.unshift(response.data);
+          })
+          .catch(error => {
+            if (error.response.status == 403) {
+              alert(error.response.data.message);
+            }
+          });
       }
     }
   }

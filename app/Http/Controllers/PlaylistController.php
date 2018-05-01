@@ -23,6 +23,12 @@ class PlaylistController extends Controller
 
         $name = $request->input('name');
 
+        $count = Playlist::where('name', $name)->where('user_id', $request->user()->id)->count();
+
+        if ($count) {
+            return response()->json(['message' => "Playlist {$name} exist"], 403);
+        }
+
         $playlist = Playlist::create([
             'name' => $name,
             'user_id' => $request->user()->id,
