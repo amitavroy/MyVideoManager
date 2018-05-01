@@ -12,7 +12,7 @@
           </div>
           <div class="clearfix mb-2">
             <ul class="list-group">
-              <li class="list-group-item" v-for="item in playlist" v-bind:key="item.id">{{item.name}}</li>
+              <playlist-item :item="item" v-for="item in playlist" v-bind:key="item.id"></playlist-item>
             </ul>
           </div>
         </div>
@@ -35,8 +35,12 @@
 
 <script>
   import axios from 'axios';
+  import PlaylistItem from './PlaylistItem';
 
   export default {
+    components: {
+      PlaylistItem
+    },
     data () {
       return {
         showPlaylist: false,

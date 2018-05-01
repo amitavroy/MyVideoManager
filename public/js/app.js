@@ -61241,6 +61241,8 @@ exports.push([module.i, "\n.playlist-wrapper[data-v-05c7f1e2] {\n  position: rel
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios__ = __webpack_require__(3);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_axios__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__PlaylistItem__ = __webpack_require__(118);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__PlaylistItem___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__PlaylistItem__);
 //
 //
 //
@@ -61276,10 +61278,14 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+
 
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
+  components: {
+    PlaylistItem: __WEBPACK_IMPORTED_MODULE_1__PlaylistItem___default.a
+  },
   data: function data() {
     return {
       showPlaylist: false,
@@ -61365,11 +61371,10 @@ var render = function() {
                       "ul",
                       { staticClass: "list-group" },
                       _vm._l(_vm.playlist, function(item) {
-                        return _c(
-                          "li",
-                          { key: item.id, staticClass: "list-group-item" },
-                          [_vm._v(_vm._s(item.name))]
-                        )
+                        return _c("playlist-item", {
+                          key: item.id,
+                          attrs: { item: item }
+                        })
                       })
                     )
                   ])
@@ -61552,6 +61557,117 @@ if (false) {
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
+
+/***/ }),
+/* 109 */,
+/* 110 */,
+/* 111 */,
+/* 112 */,
+/* 113 */,
+/* 114 */,
+/* 115 */,
+/* 116 */,
+/* 117 */,
+/* 118 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__(1)
+/* script */
+var __vue_script__ = __webpack_require__(119)
+/* template */
+var __vue_template__ = __webpack_require__(120)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/assets/js/Youtube/Playlist/PlaylistItem.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-461d7354", Component.options)
+  } else {
+    hotAPI.reload("data-v-461d7354", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 119 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  props: ['item'],
+  methods: {
+    saveVideoToPlaylist: function saveVideoToPlaylist() {
+      var postData = {
+        videoId: this.$route.params.id,
+        playlistId: this.item.id
+      };
+      axios.post('/api/playlist-entry', postData).then(function (response) {
+        console.log(response);
+      }).catch(function (error) {
+        console.error(error.response);
+      });
+    }
+  }
+});
+
+/***/ }),
+/* 120 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "li",
+    {
+      staticClass: "list-group-item cursor",
+      on: { click: _vm.saveVideoToPlaylist }
+    },
+    [_vm._v(_vm._s(_vm.item.name))]
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-461d7354", module.exports)
+  }
+}
 
 /***/ })
 /******/ ]);
