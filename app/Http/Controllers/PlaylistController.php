@@ -10,7 +10,11 @@ class PlaylistController extends Controller
 {
     public function index()
     {
-        $playlists = Playlist::where('user_id', Auth::user()->id)->orderBy('name', 'asc')->get();
+        $playlists = Playlist::with('entries')
+            ->where('user_id', Auth::user()->id)
+            ->orderBy('updated_at', 'desc')
+            ->get();
+
         return $playlists;
     }
 

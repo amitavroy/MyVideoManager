@@ -13,6 +13,7 @@ import VueYoutube from 'vue-youtube';
 
 import YoutubeDash from './Youtube/YoutubeDash.vue';
 import VideoDetail from './Youtube/VideoDetail.vue';
+import MyPlaylists from './Youtube/MyPlaylists.vue';
 
 Vue.use(VueRouter);
 Vue.use(VueYoutube);
@@ -21,7 +22,8 @@ window.eventBus = new Vue({});
 
 const routes = [
     {path: '/', component: YoutubeDash, 'name': 'youtube-dash'},
-    {path: '/video/:id', component: VideoDetail, 'name': 'youtube-video'}
+    {path: '/video/:id', component: VideoDetail, 'name': 'youtube-video'},
+    {path: '/playlists', component: MyPlaylists, 'name': 'my-playlist-page'}
 ];
 
 const router = new VueRouter({
