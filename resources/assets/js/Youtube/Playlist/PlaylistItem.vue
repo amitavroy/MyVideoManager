@@ -14,9 +14,11 @@
         axios.post('/api/playlist-entry', postData)
           .then(response => {
             console.log(response);
+            window.eventBus.$emit('successPlaylistItemAdded', 'The video is added.')
           })
           .catch(error => {
             console.error(error.response);
+            window.eventBus.$emit('errorPlaylistItemNotAdded', error.response.data.message);
           })
       }
     }

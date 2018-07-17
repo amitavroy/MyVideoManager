@@ -1,5 +1,6 @@
 <template>
   <div class="playlist-wrapper">
+    <notifications group="foo" :classes="notificationClasses" />
     <button class="btn btn-sm btn-primary"
             @click="playlistOpen">+ Add</button>
 
@@ -41,8 +42,27 @@
     components: {
       PlaylistItem
     },
+    created () {
+      window.eventBus.$on('successPlaylistItemAdded', data => {
+        this.notificationClasses = 'vue-notification success'
+        this.$notify({
+          group: 'foo',
+          title: 'Success!',
+          text: data
+        });
+      });
+      window.eventBus.$on('errorPlaylistItemNotAdded', data => {
+        this.notificationClasses = 'vue-notification error'
+        this.$notify({
+          group: 'foo',
+          title: 'Error!',
+          text: data
+        });
+      });
+    },
     data () {
       return {
+        notificationClasses: null,
         showPlaylist: false,
         loadingData: false,
         playlistName: '',
