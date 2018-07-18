@@ -15,6 +15,7 @@
   import VideoGroup from './VideoGroup.vue';
   import Finder from './Finder.vue';
   import Search from './Search';
+  import LocalDB from './../LocalDB';
 
   export default {
     components: {
@@ -22,14 +23,16 @@
     },
 
     created() {
+      let searchTerm = this.localDB.getData('search') ? this.localDB.getData('search') : 'arijit singh'
       Search({
         apiKey: 'AIzaSyBYihdwrKA2wwLzOdhR6madQt1vFeToP7k',
-        term: 'x men',
+        term: searchTerm,
         items: 10
       }, response => this.handleSearchResults(response));
 
-      window.eventBus.$on('searchForYoutubeStarted', () => {
+      window.eventBus.$on('searchForYoutubeStarted', (string) => {
         this.loading = true;
+        this.localDB.setData('search', string);
       });
 
       window.eventBus.$on('searchResultFromYoutube', videos => {
@@ -41,6 +44,7 @@
 
     data() {
       return {
+        localDB: new LocalDB(),
         videos: null,
         loading: true
       }

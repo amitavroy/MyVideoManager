@@ -1,16 +1,25 @@
 <script>
   import Search from './Search';
+  import LocalDB from "../LocalDB";
 
   export default {
+    created () {
+      let placeholder = this.localDB.getData('search')
+      if (placeholder) {
+        this.setPlaceHolder(placeholder);
+      }
+    },
     data () {
       return {
-        searchString: ''
+        localDB: new LocalDB(),
+        searchString: '',
+        placeholder: 'asd'
       }
     },
 
     methods: {
       handleFormSubmit() {
-        window.eventBus.$emit('searchForYoutubeStarted');
+        window.eventBus.$emit('searchForYoutubeStarted', this.searchString);
 
         Search({
           apiKey: 'AIzaSyBYihdwrKA2wwLzOdhR6madQt1vFeToP7k',
@@ -18,8 +27,12 @@
           items: 10
         }, data => {
           window.eventBus.$emit('searchResultFromYoutube', data);
+          this.setPlaceHolder(this.searchString);
           this.searchString = '';
         });
+      },
+      setPlaceHolder (string) {
+        this.placeholder = "Search result for " + string;
       }
     }
   }
@@ -30,6 +43,7 @@
     <div class="container">
       <form v-on:submit.prevent="handleFormSubmit">
         <input
+          v-bind:placeholder="placeholder"
           v-model="searchString"
           type="text"
           class="form-control">
